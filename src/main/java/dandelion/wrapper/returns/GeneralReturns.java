@@ -5,7 +5,8 @@ import dandelion.wrapper.defines.GeneralException;
 import dandelion.wrapper.defines.GeneralExecuted;
 import org.springframework.validation.BindingResult;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 
@@ -15,9 +16,9 @@ public interface GeneralReturns {
   /**
    * wrap no args result
    *
-   * @return {@link ServerResult}
+   * @return {@link ServerProceed}
    */
-  default ServerResult wrapper() {
+  default ServerProceed wrapper() {
     return ResultBuilder.finalized();
   }
 
@@ -25,9 +26,9 @@ public interface GeneralReturns {
    * wrap no args result
    *
    * @param state status for return
-   * @return {@link ServerResult}
+   * @return {@link ServerProceed}
    */
-  default ServerResult wrapper(final GeneralExecuted state) {
+  default ServerProceed wrapper(final GeneralExecuted state) {
     return ResultBuilder.finalized(state);
   }
 
@@ -36,10 +37,20 @@ public interface GeneralReturns {
    *
    * @param attach response attachment
    * @param <A> type of attachment
-   * @return {@link ServerResult}
+   * @return {@link ServerProceed}
    */
-  default <A> NormalResult<A> wrapper(final A attach) {
+  default <A> NormalProceed<A> wrapper(final Collection<A> attach) {
     return ResultBuilder.finalized(process_succeed, attach);
+  }
+  /**
+   * wrap no args result
+   *
+   * @param attach response attachment
+   * @param <A> type of attachment
+   * @return {@link ServerProceed}
+   */
+  default <A> NormalProceed<A> wrapper(final A attach) {
+    return ResultBuilder.finalized(process_succeed, Collections.singletonList(attach));
   }
 
   /**
@@ -48,10 +59,22 @@ public interface GeneralReturns {
    * @param state response status
    * @param attach response attachment
    * @param <A> type of attachment
-   * @return {@link ServerResult}
+   * @return {@link ServerProceed}
    */
-  default <A> NormalResult<A> wrapper(final GeneralExecuted state, final A attach) {
+  default <A> NormalProceed<A> wrapper(final GeneralExecuted state, final Collection<A> attach) {
     return ResultBuilder.finalized(state, attach);
+  }
+
+  /**
+   * wrap no args result
+   *
+   * @param state response status
+   * @param attach response attachment
+   * @param <A> type of attachment
+   * @return {@link ServerProceed}
+   */
+  default <A> NormalProceed<A> wrapper(final GeneralExecuted state, final A attach) {
+    return ResultBuilder.finalized(state, Collections.singletonList(attach));
   }
 
   /**
@@ -59,9 +82,9 @@ public interface GeneralReturns {
    *
    * @param result {@link MethodResult <A>} defined wrapper
    * @param <A> type of attachment
-   * @return {@link NormalResult<A>}
+   * @return {@link NormalProceed <A>}
    */
-  default <A> NormalResult<A> wrapper(final MethodResult<A> result) {
+  default <A> NormalProceed<A> wrapper(final MethodResult<A> result) {
     return ResultBuilder.finalized(result);
   }
 
@@ -72,7 +95,7 @@ public interface GeneralReturns {
    * @param <A> type of pageable attachment
    * @return {@link MethodResult <A>}
    */
-  default <A> PagedResult<A> wrapper(final PagingResult<A> attach) {
+  default <A> PagingProceed<A> wrapper(final PagingResult<A> attach) {
     return ResultBuilder.pageable(attach);
   }
 
@@ -80,9 +103,9 @@ public interface GeneralReturns {
    * wrap ProjectException
    *
    * @param errors {@link GeneralException} the exception
-   * @return {@link NormalResult<List<String>>}
+   * @return {@link NormalProceed <List<String>>}
    */
-  default NormalResult<List<String>> wrapper(final GeneralException errors) {
+  default NormalProceed<String> wrapper(final GeneralException errors) {
     return ResultBuilder.exceptions(errors);
   }
 
@@ -90,9 +113,9 @@ public interface GeneralReturns {
    * wrap ProjectException
    *
    * @param errors {@link GeneralException} the exception
-   * @return {@link NormalResult<List<String>>}
+   * @return {@link NormalProceed <List<String>>}
    */
-  default NormalResult<List<String>> wrapper(final BindingResult errors) {
+  default NormalProceed<String> wrapper(final BindingResult errors) {
     return ResultBuilder.exceptions(errors);
   }
 }

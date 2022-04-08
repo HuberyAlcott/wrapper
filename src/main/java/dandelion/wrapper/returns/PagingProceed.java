@@ -5,10 +5,12 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
 
-/** @author Marcus */
+/**
+ *  
+ * @author Marcus */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PagedResult<A> extends ServerResult {
+public class PagingProceed<A> extends ServerProceed {
 
   private Long page;
 

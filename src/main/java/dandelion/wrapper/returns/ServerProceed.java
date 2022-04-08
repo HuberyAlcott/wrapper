@@ -8,7 +8,7 @@ import java.io.Serializable;
 /** @author Marcus */
 @Data
 @EqualsAndHashCode
-public class ServerResult implements Serializable {
+public class ServerProceed implements Serializable {
 
   private String code;
 

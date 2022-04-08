@@ -11,6 +11,7 @@ public enum GeneralStatus implements GeneralExecuted {
   process_succeed("A0000000", "成功"),
   process_failure("A0000001", "失败"),
   process_errored("A0000002", "异常"),
+  calling_timeout("A0000003", "请求调用超时"),
   params_errored("A0000004", "参数异常"),
   ;
   private final String code;

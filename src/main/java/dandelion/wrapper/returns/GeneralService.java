@@ -6,13 +6,16 @@ import dandelion.wrapper.defines.Paged;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 
-/** @author Marcus */
+/**
+ * @author Marcus
+ */
 public interface GeneralService {
 
   /**
@@ -23,6 +26,29 @@ public interface GeneralService {
    * @return {@link MethodResult <A>}
    */
   default <A> MethodResult<A> attach(final A attach) {
+    return ResultBuilder.functional(Collections.singletonList(attach));
+  }
+
+  /**
+   * wrap normal attach
+   *
+   * @param state process status {@link GeneralExecuted}
+   * @param attach attachment object
+   * @param <A> type of attachment
+   * @return {@link MethodResult <A>}
+   */
+  default <A> MethodResult<A> attach(final GeneralExecuted state, final A attach) {
+    return ResultBuilder.functional(state, Collections.singletonList(attach));
+  }
+
+  /**
+   * wrap normal attach
+   *
+   * @param attach attachment object
+   * @param <A> type of attachment
+   * @return {@link MethodResult <A>}
+   */
+  default <A> MethodResult<A> attach(final Collection<A> attach) {
     return ResultBuilder.functional(attach);
   }
 
@@ -45,7 +71,7 @@ public interface GeneralService {
    * @param <A> type of pageable attachment
    * @return {@link MethodResult <A>}
    */
-  default <A> MethodResult<A> attach(final GeneralExecuted state, final A attach) {
+  default <A> MethodResult<A> attach(final GeneralExecuted state, final Collection<A> attach) {
     return ResultBuilder.functional(state, attach);
   }
 
@@ -101,8 +127,7 @@ public interface GeneralService {
    * @param <S> type of target object
    * @return {@link List<T>}
    */
-  default <T, S> List<T> convertCollection(
-      final Collection<S> source, final Function<S, T> method) {
+  default <T, S> List<T> collector(final Collection<S> source, final Function<S, T> method) {
     return source.parallelStream().map(method).collect(Collectors.toList());
   }
 }
