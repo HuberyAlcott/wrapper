@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * @author marcus
+ * @author Marcus
  */
 @Slf4j
 public final class RandomTools {

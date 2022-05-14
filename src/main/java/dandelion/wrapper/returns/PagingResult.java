@@ -5,12 +5,18 @@ import dandelion.wrapper.defines.Paged;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 
-/** @author Marcus */
+/**
+ * PagingResult
+ *
+ * @author Marcus
+ */
 @Data
 @EqualsAndHashCode
-public class PagingResult<B> {
+public class PagingResult<B> implements Serializable {
 
   private GeneralExecuted state;
 

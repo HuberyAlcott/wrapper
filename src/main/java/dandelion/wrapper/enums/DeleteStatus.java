@@ -5,7 +5,9 @@ import lombok.Getter;
 
 import java.util.Objects;
 
-/** @author Marcus */
+/**
+ * @author Marcus
+ */
 @Getter
 @AllArgsConstructor
 public enum DeleteStatus {

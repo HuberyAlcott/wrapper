@@ -6,11 +6,14 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** @author Marcus */
+/**
+ * @author Marcus
+ */
 @Slf4j
 public final class JacksonTools {
 
@@ -21,26 +24,16 @@ public final class JacksonTools {
     return jsonify(object, mapper);
   }
 
-  private static <T> String jsonify(T object, ObjectMapper mapper) {
+  public static <T> String jsonify(T object, ObjectMapper mapper) {
     try {
       return mapper.writeValueAsString(object);
     } catch (JsonProcessingException e) {
       log.error("'{}'不能转换成JSON字符串", object.getClass().getName());
+      e.printStackTrace();
+      if ((object instanceof Collection | object instanceof Array)) {
+        return "[]";
+      }
       return "{}";
-    }
-  }
-
-  public static <T> String jsonify(final List<T> list) {
-    final ObjectMapper mapper = new ObjectMapper();
-    return jsonify(list, mapper);
-  }
-
-  public static <T> String jsonify(final List<T> object, final ObjectMapper mapper) {
-    try {
-      return mapper.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      log.error("目标数组不能转换成JSON字符串");
-      return "[]";
     }
   }
 

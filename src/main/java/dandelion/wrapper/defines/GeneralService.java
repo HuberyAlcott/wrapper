@@ -1,8 +1,8 @@
-package dandelion.wrapper.returns;
+package dandelion.wrapper.defines;
 
 import dandelion.wrapper.builder.ResultBuilder;
-import dandelion.wrapper.defines.GeneralExecuted;
-import dandelion.wrapper.defines.Paged;
+import dandelion.wrapper.returns.MethodResult;
+import dandelion.wrapper.returns.PagingResult;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Collection;
@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 
 /**
+ * GeneralService
+ *
  * @author Marcus
  */
 public interface GeneralService {

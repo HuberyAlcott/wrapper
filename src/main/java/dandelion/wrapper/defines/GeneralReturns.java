@@ -1,8 +1,7 @@
-package dandelion.wrapper.returns;
+package dandelion.wrapper.defines;
 
 import dandelion.wrapper.builder.ResultBuilder;
-import dandelion.wrapper.defines.GeneralException;
-import dandelion.wrapper.defines.GeneralExecuted;
+import dandelion.wrapper.returns.*;
 import org.springframework.validation.BindingResult;
 
 import java.util.Collection;
@@ -10,7 +9,11 @@ import java.util.Collections;
 
 import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 
-/** @author Marcus */
+/**
+ * GeneralReturns
+ *
+ * @author Marcus
+ */
 public interface GeneralReturns {
 
   /**

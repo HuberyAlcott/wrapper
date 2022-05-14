@@ -1,6 +1,11 @@
 package dandelion.wrapper.utilities;
 
-/** @author Marcus */
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @author Marcus
+ */
 public final class SerialTools {
 
   public static class Snow {
@@ -139,5 +144,40 @@ public final class SerialTools {
     }
   }
 
-  public static class Time{}
+  public static class Time {
+
+    private static final int PK_LENGTH = 18;
+    private static final int PK_MAX_LENGTH = 14;
+    private static final String LENGTH_LACK_FILL = "0";
+    private static final Lock REENTRANT_LOCK = new ReentrantLock();
+
+    private Time() {}
+
+    public static synchronized Long next() {
+      long ret;
+      REENTRANT_LOCK.lock();
+      try {
+        String app = "10";
+        ret = Long.parseLong(padding(String.valueOf(System.nanoTime()), app));
+      } finally {
+        REENTRANT_LOCK.unlock();
+      }
+      return ret;
+    }
+
+    private static String padding(String str, String app) {
+      StringBuilder sbf = new StringBuilder(app);
+      sbf.append(str);
+      int lengthLack = 0;
+      if (sbf.length() < PK_LENGTH) {
+        lengthLack = PK_LENGTH - sbf.length();
+      }
+      sbf.append(LENGTH_LACK_FILL.repeat(Math.max(0, lengthLack)));
+      if (sbf.length() > PK_MAX_LENGTH) {
+        /*截取前几位*/
+        return sbf.substring(sbf.length() - PK_MAX_LENGTH, sbf.length());
+      }
+      return sbf.toString();
+    }
+  }
 }

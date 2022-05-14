@@ -5,7 +5,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Collection;
 
-/** @author Marcus */
+/**
+ * NormalProceed
+ *
+ * @author Marcus
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NormalProceed<A> extends ServerProceed {

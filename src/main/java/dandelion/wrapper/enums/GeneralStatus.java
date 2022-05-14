@@ -3,7 +3,9 @@ package dandelion.wrapper.enums;
 import dandelion.wrapper.defines.GeneralExecuted;
 import lombok.AllArgsConstructor;
 
-/** @author Marcus */
+/**
+ * @author Marcus
+ */
 @AllArgsConstructor
 public enum GeneralStatus implements GeneralExecuted {
 

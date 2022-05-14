@@ -5,7 +5,11 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
-/** @author Marcus */
+/**
+ * ServerProceed
+ *
+ * @author Marcus
+ */
 @Data
 @EqualsAndHashCode
 public class ServerProceed implements Serializable {

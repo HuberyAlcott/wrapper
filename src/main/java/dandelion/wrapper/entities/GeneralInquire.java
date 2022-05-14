@@ -15,12 +15,21 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode
-public class GeneralInquire implements Serializable {
+public class GeneralInquire<RS> implements Serializable {
 
-  private List<Long> recordSerials = new ArrayList<>(0);
+  /** 当前页号 */
+  private Integer currPage;
 
+  /** 每页数量 */
+  private Integer pageSize;
+
+  /** 编号列表 */
+  private List<RS> recordSerials = new ArrayList<>(0);
+
+  /** 可用状态 */
   private Integer enableStatus;
 
+  /** 删除状态 */
   private Integer deleteStatus;
 
   /** 创建开始时间 */

@@ -6,8 +6,10 @@ import lombok.EqualsAndHashCode;
 import java.util.Collection;
 
 /**
- *  
- * @author Marcus */
+ * PagingProceed
+ *
+ * @author Marcus
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PagingProceed<A> extends ServerProceed {

@@ -1,11 +1,9 @@
 package dandelion.wrapper.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 接口出入参对象
@@ -16,16 +14,18 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class GeneralConduit implements Serializable {
 
+  /** 记录编号 */
   private Long recordSerial;
 
+  /** 可用状态 */
   private Integer enableStatus;
 
+  /** 删除状态 */
   private Integer deleteStatus;
 
-  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-  private LocalDateTime createTiming;
+  /** 创建时间 */
+  private Long createTiming;
 
-  @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-  private LocalDateTime updateTiming;
-
+  /** 更新时间 */
+  private Long updateTiming;
 }
