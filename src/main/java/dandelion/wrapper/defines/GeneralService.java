@@ -1,12 +1,12 @@
 package dandelion.wrapper.defines;
 
 import dandelion.wrapper.builder.ResultBuilder;
-import dandelion.wrapper.returns.MethodResult;
 import dandelion.wrapper.returns.PagingResult;
+import dandelion.wrapper.returns.PlentyResult;
+import dandelion.wrapper.returns.SingleResult;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,71 +21,71 @@ import static dandelion.wrapper.enums.GeneralStatus.process_succeed;
 public interface GeneralService {
 
   /**
-   * wrap normal attach
+   * 封装对象类型返回值结果,默认状态
    *
-   * @param attach attachment object
-   * @param <A> type of attachment
-   * @return {@link MethodResult <A>}
+   * @param attach 返回值结果
+   * @param <A> 返回值类型
+   * @return {@link SingleResult }
    */
-  default <A> MethodResult<A> attach(final A attach) {
-    return ResultBuilder.functional(Collections.singletonList(attach));
-  }
-
-  /**
-   * wrap normal attach
-   *
-   * @param state process status {@link GeneralExecuted}
-   * @param attach attachment object
-   * @param <A> type of attachment
-   * @return {@link MethodResult <A>}
-   */
-  default <A> MethodResult<A> attach(final GeneralExecuted state, final A attach) {
-    return ResultBuilder.functional(state, Collections.singletonList(attach));
-  }
-
-  /**
-   * wrap normal attach
-   *
-   * @param attach attachment object
-   * @param <A> type of attachment
-   * @return {@link MethodResult <A>}
-   */
-  default <A> MethodResult<A> attach(final Collection<A> attach) {
+  default <A> SingleResult<A> attach(final A attach) {
     return ResultBuilder.functional(attach);
   }
 
   /**
-   * wrap pageable attach
+   * 封装对象类型返回值,指定状态
    *
-   * @param attach attachment object
-   * @param <A> type of pageable attachment
-   * @return {@link MethodResult <A>}
+   * @param state 状态值
+   * @param attach 返回值
+   * @param <A> 返回值类型
+   * @return {@link SingleResult }
    */
-  default <A> PagingResult<A> attach(final Paged<A> attach) {
-    return ResultBuilder.temporary(attach);
-  }
-
-  /**
-   * wrap pageable attach
-   *
-   * @param state processed status
-   * @param attach attachment object
-   * @param <A> type of pageable attachment
-   * @return {@link MethodResult <A>}
-   */
-  default <A> MethodResult<A> attach(final GeneralExecuted state, final Collection<A> attach) {
+  default <A> SingleResult<A> attach(final GeneralExecuted state, final A attach) {
     return ResultBuilder.functional(state, attach);
   }
 
   /**
-   * wrap pageable attach
+   * 封装集合类型返回值,默认状态
    *
-   * @param state processed status
-   * @param attach attachment object
-   * @param <A> type of pageable attachment
-   * @return {@link MethodResult <A>}
+   * @param attach 返回值
+   * @param <A> 返回值类型
+   * @return {@link PlentyResult}
    */
-  default <A> PagingResult<A> attach(final GeneralExecuted state, final Paged<A> attach) {
+  default <A> PlentyResult<A> attach(final Collection<A> attach) {
+    return ResultBuilder.functional(attach);
+  }
+
+  /**
+   * 封装集合类型返回值,指定状态
+   *
+   * @param state 状态值
+   * @param attach 返回值
+   * @param <A> 返回值类型
+   * @return {@link PlentyResult }
+   */
+  default <A> PlentyResult<A> attach(final GeneralExecuted state, final Collection<A> attach) {
+    return ResultBuilder.functional(state, attach);
+  }
+
+  /**
+   * 封装分页类型返回值,默认状态
+   *
+   * @param attach 返回值
+   * @param <A> 返回值类型
+   * @return {@link PagingResult }
+   */
+  default <A> PagingResult<A> paging(final Paged<A> attach) {
+    return ResultBuilder.temporary(attach);
+  }
+
+  /**
+   * 封装分页类型返回值,指定状态
+   *
+   * @param state 状态值
+   * @param attach 返回值
+   * @param <A> 返回值类型
+   * @return {@link PagingResult }
+   */
+  default <A> PagingResult<A> paging(final GeneralExecuted state, final Paged<A> attach) {
     return ResultBuilder.temporary(state, attach);
   }
 
@@ -96,7 +96,29 @@ public interface GeneralService {
    * @param <B> 返回值类型
    * @return 是否成功
    */
-  default <B> boolean judgement(MethodResult<B> result) {
+  default <B> boolean judgement(SingleResult<B> result) {
+    return !ObjectUtils.isEmpty(result) && judgement(result.getState());
+  }
+
+  /**
+   * 判断通用返回值是否成功
+   *
+   * @param result 返回值
+   * @param <B> 返回值类型
+   * @return 是否成功
+   */
+  default <B> boolean judgement(PlentyResult<B> result) {
+    return !ObjectUtils.isEmpty(result) && judgement(result.getState());
+  }
+
+  /**
+   * 判断通用返回值是否成功
+   *
+   * @param result 返回值
+   * @param <B> 返回值类型
+   * @return 是否成功
+   */
+  default <B> boolean judgement(PagingResult<B> result) {
     return !ObjectUtils.isEmpty(result) && judgement(result.getState());
   }
 
@@ -121,12 +143,12 @@ public interface GeneralService {
   }
 
   /**
-   * convert a list to other list
+   * 将指定集合转换成另一个集合
    *
-   * @param source the source collection
-   * @param method convert function method
-   * @param <T> type of source object
-   * @param <S> type of target object
+   * @param source 原始集合
+   * @param method 转换方法
+   * @param <T> 原始类型
+   * @param <S> 转换类型
    * @return {@link List<T>}
    */
   default <T, S> List<T> collector(final Collection<S> source, final Function<S, T> method) {

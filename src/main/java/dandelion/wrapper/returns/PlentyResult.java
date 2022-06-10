@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 @Data
 @EqualsAndHashCode
-public class MethodResult<B> implements Serializable {
+public class PlentyResult<B> implements Serializable {
 
   private GeneralExecuted state;
 

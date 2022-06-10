@@ -356,6 +356,7 @@ public enum ContentStyles {
   T_SISX(".sisx", "application/vnd.symbian.install"),
   T_IPA(".ipa", "application/vnd.iphone"),
   T_XAP(".xap", "application/x-silverlight-app"),
+  T_ZIP(".zip", "application/x-zip-compressed"),
   ;
   private final String ends;
   private final String cont;

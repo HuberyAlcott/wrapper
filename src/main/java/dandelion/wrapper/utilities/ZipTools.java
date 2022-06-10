@@ -15,9 +15,12 @@ import java.util.zip.ZipOutputStream;
  * @author Marcus
  */
 @Slf4j
-public class ZipTools extends FilesTools {
+public final class ZipTools extends FilesTools {
 
-  private static final int BUFFER_BYTES_LENGTH = 2048;
+  private ZipTools() {}
+
+  /** 一次读取的字节数 */
+  private static final int BUFFER_BYTES_LENGTH = 1024 * 1024 * 4;
 
   public static boolean doZipPathTree(final Path dirPath, final Path zipPath) {
     byte[] bytes = new byte[0];
